@@ -6,9 +6,11 @@ import { routes } from './app.routes';
 import { TokenInterceptor } from './interceptors/token-interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
+  providers: [  
     provideRouter(routes),
     provideHttpClient(withInterceptors([TokenInterceptor]))
+    // 👇 No agregar 'provideReactiveForms()' aquí en tu versión
   ]
 };
+
 
