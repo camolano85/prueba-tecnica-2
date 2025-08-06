@@ -1,23 +1,47 @@
-<h2>Listado de Empleados</h2>
-<table border="1" cellpadding="6">
-  <thead>
-    <tr>
-      <th>Código</th>
-      <th>Nombre</th>
-      <th>Apellido 1</th>
-      <th>Apellido 2</th>
-      <th>Departamento</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let emp of empleados">
-      <td>{{ emp.codigo }}</td>
-      <td>{{ emp.nombre }}</td>
-      <td>{{ emp.apellido1 }}</td>
-      <td>{{ emp.apellido2 }}</td>
-      <td>{{ emp.codigo_departamento }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container mt-4">
+  <h2 class="mb-4">Listado de Empleados</h2>
+
+  <div class="mb-3 text-end">
+    <button class="btn btn-success" routerLink="/empleados/crear">
+      + Crear Empleado
+    </button>
+  </div>
+
+  <table class="table table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Apellido 1</th>
+        <th>Apellido 2</th>
+        <th>Departamento</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of empleados">
+        <td>{{ emp.codigo }}</td>
+        <td>{{ emp.nombre }}</td>
+        <td>{{ emp.apellido1 }}</td>
+        <td>{{ emp.apellido2 }}</td>
+        <td>{{ emp.codigo_departamento }}</td>
+        <td>
+          <button
+            class="btn btn-sm btn-primary me-2"
+            [routerLink]="['/empleados/editar', emp._id]">
+            Editar
+          </button>
+          <button
+            class="btn btn-sm btn-danger"
+            *ngIf="emp._id"
+            (click)="eliminarEmpleado(emp._id!)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 

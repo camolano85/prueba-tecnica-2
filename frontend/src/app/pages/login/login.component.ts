@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
@@ -22,12 +22,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      username: [''],
-      password: ['']
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
-  onSubmit() {
+  // Método para enviar formulario
+  onSubmit(): void {
     if (this.form.valid) {
       this.authService.login(this.form.value).subscribe({
         next: () => this.router.navigate(['/dashboard']),
@@ -36,6 +37,5 @@ export class LoginComponent implements OnInit {
     }
   }
 }
-//pruebaS
 
 
