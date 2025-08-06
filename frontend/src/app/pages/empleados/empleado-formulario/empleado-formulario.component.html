@@ -5,23 +5,28 @@
 
       <form [formGroup]="form" (ngSubmit)="guardar()">
         <div class="mb-3">
+          <label for="codigo" class="form-label">Código</label>
+          <input id="codigo" formControlName="codigo" type="number" class="form-control" />
+        </div>
+
+        <div class="mb-3">
           <label for="nombre" class="form-label">Nombre</label>
           <input id="nombre" formControlName="nombre" class="form-control" />
         </div>
 
         <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input id="email" formControlName="email" type="email" class="form-control" />
+          <label for="apellido1" class="form-label">Apellido 1</label>
+          <input id="apellido1" formControlName="apellido1" class="form-control" />
         </div>
 
         <div class="mb-3">
-          <label for="cargo" class="form-label">Cargo</label>
-          <input id="cargo" formControlName="cargo" class="form-control" />
+          <label for="apellido2" class="form-label">Apellido 2</label>
+          <input id="apellido2" formControlName="apellido2" class="form-control" />
         </div>
 
         <div class="mb-3">
-          <label for="departamento" class="form-label">Departamento</label>
-          <input id="departamento" formControlName="departamento" class="form-control" />
+          <label for="codigo_departamento" class="form-label">Departamento</label>
+          <input id="codigo_departamento" formControlName="codigo_departamento" type="number" class="form-control" />
         </div>
 
         <button type="submit" class="btn btn-primary w-100" [disabled]="form.invalid">Guardar</button>
@@ -29,3 +34,4 @@
     </div>
   </div>
 </div>
+

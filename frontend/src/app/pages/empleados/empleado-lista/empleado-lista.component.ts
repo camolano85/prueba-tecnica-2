@@ -1,34 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { EmpleadoService, Empleado } from '/home/andres/Documentos/github/prueba-tecnica-2/frontend/src/app/services/empleado.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-empleado-lista',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule],
   templateUrl: './empleado-lista.component.html',
 })
 export class EmpleadoListaComponent implements OnInit {
   empleados: Empleado[] = [];
 
-  constructor(private empleadoService: EmpleadoService) {}
+  constructor(
+    private empleadoService: EmpleadoService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.empleadoService.getEmpleados().subscribe({
-      next: (data) => this.empleados = data,
-      error: () => alert('Error al obtener empleados'),
+    this.obtenerEmpleados();
+  }
+
+  obtenerEmpleados(): void {
+    this.empleadoService.getEmpleados().subscribe((data) => {
+      this.empleados = data;
     });
   }
 
-  eliminarEmpleado(id: string): void {
+  eliminar(id: string): void {
     if (confirm('¿Estás seguro de eliminar este empleado?')) {
-      this.empleadoService.deleteEmpleado(id).subscribe({
-        next: () => {
-          this.empleados = this.empleados.filter(emp => emp._id !== id);
-        },
-        error: () => alert('Error al eliminar el empleado'),
+      this.empleadoService.deleteEmpleado(id).subscribe(() => {
+        this.obtenerEmpleados();
       });
     }
   }
+
+  editar(id: string): void {
+    this.router.navigate(['/empleados/editar', id]);
+  }
+
+  crear(): void {
+    this.router.navigate(['/empleados/nuevo']);
+  }
 }
+
