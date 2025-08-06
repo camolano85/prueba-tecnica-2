@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <h2 class="fw-bold mb-4" *ngIf="esEdicion; else crear">Editar Departamento</h2>
+  <ng-template #crear><h2 class="fw-bold mb-4">Crear Departamento</h2></ng-template>
+
+  <form [formGroup]="formulario" (ngSubmit)="guardar()">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre del Departamento</label>
+      <input
+        type="text"
+        id="nombre"
+        class="form-control"
+        formControlName="nombre"
+        placeholder="Ingrese el nombre del departamento"
+        [ngClass]="{ 'is-invalid': formulario.get('nombre')?.touched && formulario.get('nombre')?.invalid }"
+      />
+      <div
+        *ngIf="formulario.get('nombre')?.touched && formulario.get('nombre')?.invalid"
+        class="invalid-feedback d-block"
+      >
+        El nombre es requerido.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="formulario.invalid">
+      {{ esEdicion ? 'Actualizar' : 'Crear' }}
+    </button>
+    <a routerLink="/departamentos" class="btn btn-secondary ms-2">Cancelar</a>
+  </form>
+</div>

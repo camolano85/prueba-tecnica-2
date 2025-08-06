@@ -1,16 +1,12 @@
+const { Schema, model } = require('mongoose');
 
-const mongoose = require('mongoose');
-
-const departamentoSchema = new mongoose.Schema({
-  codigo: {
-    type: Number,
-    required: true,
-    unique: true
-  },
+const DepartamentoSchema = new Schema({
   nombre: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   }
 });
 
-module.exports = mongoose.model('Departamento', departamentoSchema);
+module.exports = model('Departamento', DepartamentoSchema);
+
