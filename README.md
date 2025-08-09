@@ -1,6 +1,6 @@
 # Prueba Técnica: Empleados y Departamentos
 
-Este proyecto es una aplicación web full stack para la gestión de empleados y departamentos, desarrollada como parte de una prueba técnica.
+Este proyecto es una aplicación web full stack para la gestión de empleados y departamentos.
 
 ## Tecnologías utilizadas
 
