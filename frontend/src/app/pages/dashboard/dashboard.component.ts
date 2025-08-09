@@ -1,66 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
+
+// Listas embebidas (standalone)
 import { EmpleadoListaComponent } from '../empleados/empleado-lista/empleado-lista.component';
 import { DepartamentoListaComponent } from '../departamentos/departamento-lista/departamento-lista.component';
+
+type Tab = 'empleados' | 'departamentos';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    EmpleadoListaComponent,
-    DepartamentoListaComponent
-  ],
-  template: `
-    <div class="container mt-5">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            [class.active]="seccion === 'empleados'"
-            (click)="seccion = 'empleados'"
-          >
-            Empleados
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            [class.active]="seccion === 'departamentos'"
-            (click)="seccion = 'departamentos'"
-          >
-            Departamentos
-          </a>
-        </li>
-      </ul>
-
-      <div class="mt-4" *ngIf="seccion === 'empleados'">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h2 class="fw-bold">Listado de Empleados</h2>
-          <a routerLink="/empleados/nuevo" class="btn btn-success">
-            <i class="bi bi-plus-circle me-1"></i> Crear Empleado
-          </a>
-        </div>
-        <app-empleado-lista></app-empleado-lista>
-      </div>
-
-      <div class="mt-4" *ngIf="seccion === 'departamentos'">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h2 class="fw-bold">Listado de Departamentos</h2>
-          <a routerLink="/departamentos/crear" class="btn btn-success">
-            <i class="bi bi-plus-circle me-1"></i> Crear Departamento
-          </a>
-        </div>
-        <app-departamento-lista></app-departamento-lista>
-      </div>
-    </div>
-  `
+  imports: [CommonModule, RouterModule, EmpleadoListaComponent, DepartamentoListaComponent],
+  templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent {
-  seccion: 'empleados' | 'departamentos' = 'empleados';
+export class DashboardComponent implements OnInit {
+  tab: Tab = 'empleados';
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    // Permite abrir el dashboard directamente en una pestaña con ?t=empleados|departamentos
+    const q = (this.route.snapshot.queryParamMap.get('t') as Tab) || null;
+    if (q === 'empleados' || q === 'departamentos') this.tab = q;
+  }
+
+  setTab(next: Tab) {
+    if (this.tab === next) return;
+    this.tab = next;
+    // Actualiza la URL manteniendo el estado
+    this.router.navigate([], { relativeTo: this.route, queryParams: { t: next }, queryParamsHandling: 'merge' });
+  }
+
+  crear() {
+    if (this.tab === 'empleados') {
+      this.router.navigate(['/empleados/nuevo']);
+    } else {
+      this.router.navigate(['/departamentos/crear']);
+    }
+  }
+
+  get titulo(): string {
+    return this.tab === 'empleados' ? 'Listado de Empleados' : 'Listado de Departamentos';
+  }
+
+  get labelCrear(): string {
+    return this.tab === 'empleados' ? 'Crear Empleado' : 'Crear Departamento';
+  }
 }
+
 
 
 
